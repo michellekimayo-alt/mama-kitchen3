@@ -1,0 +1,1005 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mama's Kitchen Nakuru — Karibu Familia</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;0,9..144,800;1,9..144,500;1,9..144,600&family=Work+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --charcoal:#1b1410;
+    --charcoal-2:#241a14;
+    --card:#2a1f18;
+    --cream:#fbf3e6;
+    --cream-dim:#e8dcc8;
+    --ember:#d4521c;
+    --ember-bright:#f0703a;
+    --maize:#e8a93d;
+    --brick:#7a2e22;
+    --line: rgba(251,243,230,0.14);
+    --shadow: 0 18px 40px rgba(0,0,0,0.45);
+    --radius-hand: 255px 18px 225px 18px / 18px 225px 18px 255px;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--charcoal);
+    color:var(--cream);
+    font-family:'Work Sans', sans-serif;
+    font-weight:400;
+    line-height:1.6;
+    overflow-x:hidden;
+  }
+  h1,h2,h3,h4{
+    font-family:'Fraunces', serif;
+    font-weight:600;
+    line-height:1.08;
+    letter-spacing:-0.01em;
+  }
+  .eyebrow{
+    font-family:'JetBrains Mono', monospace;
+    font-size:0.72rem;
+    letter-spacing:0.18em;
+    text-transform:uppercase;
+    color:var(--maize);
+    display:flex;
+    align-items:center;
+    gap:10px;
+    margin-bottom:14px;
+  }
+  .eyebrow::before{
+    content:"";
+    width:22px; height:1px;
+    background:var(--ember);
+    display:inline-block;
+  }
+  a{color:inherit; text-decoration:none;}
+  img{display:block; max-width:100%;}
+  .wrap{max-width:1180px; margin:0 auto; padding:0 28px;}
+  ::selection{background:var(--ember); color:var(--cream);}
+
+  /* texture: faint notebook grid, a nod to the original handwritten plan */
+  .grid-texture{
+    background-image:
+      linear-gradient(rgba(251,243,230,0.035) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(251,243,230,0.035) 1px, transparent 1px);
+    background-size: 26px 26px;
+  }
+
+  /* ---------- NAV ---------- */
+  header{
+    position:fixed; top:0; left:0; right:0; z-index:100;
+    padding:18px 0;
+    transition:background .35s ease, padding .35s ease, box-shadow .35s ease;
+  }
+  header.scrolled{
+    background:rgba(27,20,16,0.92);
+    backdrop-filter: blur(10px);
+    padding:12px 0;
+    box-shadow:0 6px 24px rgba(0,0,0,0.35);
+    border-bottom:1px solid var(--line);
+  }
+  nav.wrap{display:flex; align-items:center; justify-content:space-between;}
+  .brand{display:flex; align-items:center; gap:10px; font-family:'Fraunces',serif; font-weight:700; font-size:1.25rem;}
+  .brand .dot{width:9px;height:9px;border-radius:50%;background:var(--ember); box-shadow:0 0 12px var(--ember-bright);}
+  .navlinks{display:flex; gap:30px; font-size:0.92rem;}
+  .navlinks a{position:relative; padding:4px 0; opacity:0.88; transition:opacity .2s;}
+  .navlinks a:hover{opacity:1;}
+  .navlinks a::after{
+    content:""; position:absolute; left:0; right:0; bottom:-3px; height:2px;
+    background:var(--ember); transform:scaleX(0); transform-origin:left;
+    transition:transform .25s ease;
+  }
+  .navlinks a:hover::after{transform:scaleX(1);}
+  .nav-cta{
+    font-family:'JetBrains Mono', monospace; font-size:0.78rem; letter-spacing:0.04em;
+    padding:9px 18px; border:1px solid var(--ember); border-radius:var(--radius-hand);
+  }
+  .nav-cta:hover{background:var(--ember); color:var(--cream);}
+  .burger{display:none; flex-direction:column; gap:5px; cursor:pointer; background:none; border:none;}
+  .burger span{width:24px;height:2px;background:var(--cream);}
+  .mobile-menu{display:none; flex-direction:column; gap:18px; padding:24px 28px 30px; background:var(--charcoal-2); border-top:1px solid var(--line);}
+  .mobile-menu.open{display:flex;}
+
+  /* ---------- HERO ---------- */
+  .hero{
+    position:relative; min-height:100vh; display:flex; align-items:center;
+    padding-top:90px; overflow:hidden;
+  }
+  .hero::before{
+    content:""; position:absolute; inset:0;
+    background: radial-gradient(ellipse 70% 60% at 50% 0%, rgba(212,82,28,0.22), transparent 60%),
+                radial-gradient(ellipse 50% 40% at 85% 90%, rgba(232,169,61,0.12), transparent 60%);
+    pointer-events:none;
+  }
+  .ember-field{position:absolute; inset:0; pointer-events:none; overflow:hidden;}
+  .ember-spark{
+    position:absolute; bottom:-10px; width:5px; height:5px; border-radius:50%;
+    background:var(--ember-bright); box-shadow:0 0 8px 2px rgba(240,112,58,0.7);
+    animation:rise linear infinite;
+    opacity:0;
+  }
+  @keyframes rise{
+    0%{ transform:translateY(0) translateX(0); opacity:0; }
+    10%{opacity:0.9;}
+    85%{opacity:0.5;}
+    100%{ transform:translateY(-100vh) translateX(var(--drift, 30px)); opacity:0; }
+  }
+  .hero-inner{position:relative; z-index:2; max-width:780px;}
+  .hero h1{
+    font-size:clamp(2.6rem, 6vw, 4.6rem);
+    color:var(--cream);
+  }
+  .hero h1 em{
+    font-style:italic; color:var(--ember-bright); font-weight:500;
+  }
+  .hero p.lede{
+    margin-top:22px; font-size:1.15rem; color:var(--cream-dim); max-width:520px;
+  }
+  .hero .actions{display:flex; gap:16px; margin-top:36px; flex-wrap:wrap;}
+  .btn{
+    font-family:'JetBrains Mono', monospace; font-size:0.85rem; letter-spacing:0.03em;
+    padding:15px 28px; display:inline-flex; align-items:center; gap:8px;
+    border-radius:var(--radius-hand); transition:transform .2s ease, box-shadow .2s ease, background .2s;
+  }
+  .btn-primary{background:var(--ember); color:var(--cream); box-shadow:0 10px 26px rgba(212,82,28,0.35);}
+  .btn-primary:hover{transform:translateY(-3px) rotate(-0.4deg); box-shadow:0 16px 32px rgba(212,82,28,0.5);}
+  .btn-ghost{border:1px solid var(--line); color:var(--cream);}
+  .btn-ghost:hover{border-color:var(--maize); color:var(--maize); transform:translateY(-3px);}
+  .hero-tag{
+    margin-top:54px; display:flex; align-items:center; gap:14px;
+    font-family:'Fraunces',serif; font-style:italic; color:var(--cream-dim); font-size:1.02rem;
+  }
+  .hero-tag .line{width:36px; height:1px; background:var(--line);}
+
+  .hero-gallery{
+    position:absolute; right:28px; top:50%; transform:translateY(-50%);
+    display:grid; grid-template-columns:1fr 1fr; gap:14px; width:420px; z-index:1;
+  }
+  .hero-gallery .ph{
+    border-radius:14px; overflow:hidden; background:var(--card); border:1px solid var(--line);
+    aspect-ratio:1/1.1; display:flex; align-items:center; justify-content:center;
+  }
+  .hero-gallery .ph:nth-child(1){grid-row:span 2; aspect-ratio:1/2.3;}
+  .hero-gallery .ph img{width:100%; height:100%; object-fit:cover;}
+  .placeholder-icon{opacity:0.35; width:38%;}
+
+  @media(max-width:980px){
+    .hero-gallery{display:none;}
+  }
+
+  /* ---------- SECTION SHELL ---------- */
+  section{padding:110px 0;}
+  .section-head{display:flex; align-items:flex-end; justify-content:space-between; gap:30px; margin-bottom:56px; flex-wrap:wrap;}
+  .section-head h2{font-size:clamp(2rem,4vw,2.9rem); max-width:600px;}
+  .section-head p{max-width:380px; color:var(--cream-dim); font-size:0.98rem;}
+  .reveal{opacity:0; transform:translateY(24px); transition:opacity .7s ease, transform .7s ease;}
+  .reveal.show{opacity:1; transform:translateY(0);}
+
+  /* ---------- ABOUT ---------- */
+  #about{background:var(--charcoal-2);}
+  .about-grid{display:grid; grid-template-columns:1fr 1fr; gap:64px; align-items:center;}
+  .about-photo{
+    border-radius:20px; overflow:hidden; aspect-ratio:4/5; background:var(--card);
+    border:1px solid var(--line); position:relative; box-shadow:var(--shadow);
+  }
+  .about-photo img{width:100%; height:100%; object-fit:cover;}
+  .about-photo .ph-empty{position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:10px; color:var(--cream-dim);}
+  .about-text p{color:var(--cream-dim); margin-bottom:18px; font-size:1.02rem;}
+  .about-note{
+    margin-top:26px; padding:18px 20px; border-left:2px solid var(--ember);
+    background:rgba(212,82,28,0.07); border-radius:0 12px 12px 0;
+    font-family:'Fraunces',serif; font-style:italic; color:var(--cream);
+  }
+  @media(max-width:860px){ .about-grid{grid-template-columns:1fr;} }
+
+  /* ---------- SIGNATURE DISHES ---------- */
+  .dish-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:26px;}
+  .dish-card{
+    background:var(--card); border:1px solid var(--line); border-radius:18px; overflow:hidden;
+    transition:transform .3s ease, box-shadow .3s ease; position:relative;
+  }
+  .dish-card:hover{transform:translateY(-6px); box-shadow:var(--shadow);}
+  .dish-photo{aspect-ratio:4/3; background:linear-gradient(135deg,#2e2018,#1f1611); display:flex; align-items:center; justify-content:center; position:relative; overflow:hidden;}
+  .dish-photo img{width:100%; height:100%; object-fit:cover; position:absolute; inset:0;}
+  .dish-num{position:absolute; top:14px; left:14px; font-family:'JetBrains Mono',monospace; font-size:0.72rem; color:var(--maize); background:rgba(27,20,16,0.7); padding:4px 9px; border-radius:20px; z-index:2;}
+  .dish-body{padding:22px 22px 26px;}
+  .dish-body h3{font-size:1.3rem; margin-bottom:10px; color:var(--cream);}
+  .dish-body p{color:var(--cream-dim); font-size:0.94rem;}
+
+  @media(max-width:980px){ .dish-grid{grid-template-columns:repeat(2,1fr);} }
+  @media(max-width:640px){ .dish-grid{grid-template-columns:1fr;} }
+
+  /* ---------- WHY PEOPLE LOVE US ---------- */
+  #love{background:var(--charcoal-2);}
+  .quote-row{display:grid; grid-template-columns:repeat(3,1fr); gap:26px;}
+  .quote{
+    background:var(--charcoal); border:1px solid var(--line); border-radius:18px; padding:30px 26px;
+    position:relative;
+  }
+  .quote .mark{font-family:'Fraunces',serif; font-size:3.2rem; color:var(--ember); line-height:0.5; display:block; margin-bottom:14px;}
+  .quote p{font-family:'Fraunces',serif; font-style:italic; font-size:1.08rem; color:var(--cream); margin-bottom:18px;}
+  .quote .who{font-family:'JetBrains Mono',monospace; font-size:0.76rem; color:var(--maize); letter-spacing:0.04em;}
+  @media(max-width:860px){ .quote-row{grid-template-columns:1fr;} }
+
+  /* ---------- OFFERS ---------- */
+  .offer-row{display:grid; grid-template-columns:repeat(3,1fr); gap:26px;}
+  .offer-card{
+    border-radius:var(--radius-hand); border:1.5px dashed var(--ember);
+    padding:32px 26px; background:rgba(212,82,28,0.05);
+  }
+  .offer-card h3{font-size:1.2rem; margin-bottom:10px; color:var(--maize);}
+  .offer-card p{color:var(--cream-dim); font-size:0.95rem;}
+  @media(max-width:860px){ .offer-row{grid-template-columns:1fr;} }
+
+  /* ---------- MENU ---------- */
+  #menu{background:var(--charcoal-2);}
+  .menu-tabs{display:flex; gap:10px; flex-wrap:wrap; margin-bottom:46px;}
+  .menu-tab{
+    font-family:'JetBrains Mono',monospace; font-size:0.78rem; padding:10px 18px;
+    border:1px solid var(--line); border-radius:999px; cursor:pointer; transition:.2s;
+    background:transparent; color:var(--cream-dim);
+  }
+  .menu-tab.active, .menu-tab:hover{border-color:var(--ember); color:var(--cream); background:rgba(212,82,28,0.12);}
+  .menu-panel{display:none;}
+  .menu-panel.active{display:block;}
+  .menu-cat{margin-bottom:40px;}
+  .menu-cat h4{
+    font-family:'JetBrains Mono',monospace; text-transform:uppercase; letter-spacing:0.1em;
+    font-size:0.82rem; color:var(--maize); margin-bottom:18px; padding-bottom:10px; border-bottom:1px solid var(--line);
+  }
+  .menu-item{
+    display:flex; justify-content:space-between; align-items:baseline; gap:18px;
+    padding:14px 0; border-bottom:1px dotted var(--line);
+  }
+  .menu-item:last-child{border-bottom:none;}
+  .menu-item .name{font-family:'Fraunces',serif; font-size:1.06rem;}
+  .menu-item .note{display:block; font-family:'Work Sans',sans-serif; font-size:0.84rem; color:var(--cream-dim); margin-top:3px;}
+  .menu-item .price{font-family:'JetBrains Mono',monospace; color:var(--ember-bright); font-size:0.95rem; white-space:nowrap;}
+  .menu-item .price .arrow{color:var(--maize); margin-right:4px;}
+
+  /* ---------- FOOTER ---------- */
+  footer{
+    background:var(--charcoal); padding:90px 0 36px; position:relative; border-top:1px solid var(--line);
+  }
+  .footer-grid{display:grid; grid-template-columns:1.3fr 1fr 1fr; gap:50px; padding-bottom:50px;}
+  .footer-cta h2{font-size:clamp(1.9rem,3.6vw,2.6rem); margin-bottom:18px; max-width:420px;}
+  .footer-cta p{color:var(--cream-dim); max-width:420px; margin-bottom:28px;}
+  .footer-col h5{font-family:'JetBrains Mono',monospace; font-size:0.74rem; letter-spacing:0.12em; text-transform:uppercase; color:var(--maize); margin-bottom:18px;}
+  .footer-col p, .footer-col a{display:block; color:var(--cream-dim); font-size:0.95rem; margin-bottom:10px;}
+  .footer-col a:hover{color:var(--ember-bright);}
+  .footer-bottom{
+    display:flex; justify-content:space-between; align-items:center; padding-top:28px;
+    border-top:1px solid var(--line); flex-wrap:wrap; gap:14px; font-size:0.82rem; color:var(--cream-dim);
+  }
+  .owner-link{font-family:'JetBrains Mono',monospace; font-size:0.74rem; color:var(--cream-dim); opacity:0.6; cursor:pointer; border:none; background:none;}
+  .owner-link:hover{opacity:1; color:var(--maize);}
+  @media(max-width:860px){ .footer-grid{grid-template-columns:1fr; gap:34px;} }
+
+  /* ---------- MODAL ---------- */
+  .modal-overlay{
+    position:fixed; inset:0; background:rgba(10,7,5,0.78); backdrop-filter:blur(6px);
+    display:none; align-items:center; justify-content:center; z-index:1000; padding:20px;
+  }
+  .modal-overlay.open{display:flex;}
+  .modal{
+    background:var(--charcoal-2); border:1px solid var(--line); border-radius:20px;
+    max-width:560px; width:100%; max-height:86vh; overflow-y:auto; padding:34px 30px;
+    box-shadow:var(--shadow);
+  }
+  .modal h3{font-size:1.5rem; margin-bottom:6px;}
+  .modal .sub{color:var(--cream-dim); font-size:0.92rem; margin-bottom:24px;}
+  .modal-close{position:absolute; top:18px; right:20px; background:none; border:none; color:var(--cream-dim); font-size:1.4rem; cursor:pointer;}
+  .modal{position:relative;}
+  .field{margin-bottom:18px;}
+  .field label{display:block; font-family:'JetBrains Mono',monospace; font-size:0.74rem; letter-spacing:0.06em; text-transform:uppercase; color:var(--maize); margin-bottom:8px;}
+  .field input[type=password], .field input[type=text]{
+    width:100%; padding:13px 16px; border-radius:10px; border:1px solid var(--line);
+    background:var(--charcoal); color:var(--cream); font-family:'Work Sans',sans-serif; font-size:0.95rem;
+  }
+  .field input:focus{outline:none; border-color:var(--ember);}
+  .modal-msg{font-size:0.85rem; margin-top:10px; min-height:18px;}
+  .modal-msg.err{color:#e8755a;}
+  .modal-msg.ok{color:#7fd0a0;}
+
+  .owner-section{margin-bottom:30px; padding-bottom:26px; border-bottom:1px solid var(--line);}
+  .owner-section:last-child{border-bottom:none;}
+  .owner-section h4{font-family:'Fraunces',serif; font-size:1.1rem; margin-bottom:4px;}
+  .owner-section .hint{font-size:0.82rem; color:var(--cream-dim); margin-bottom:14px;}
+  .upload-row{display:flex; align-items:center; gap:14px; flex-wrap:wrap;}
+  .thumb{width:64px; height:64px; border-radius:10px; object-fit:cover; border:1px solid var(--line); background:var(--charcoal);}
+  .upload-btn{
+    font-family:'JetBrains Mono',monospace; font-size:0.78rem; padding:10px 16px;
+    border:1px solid var(--ember); border-radius:10px; cursor:pointer; color:var(--cream); background:none;
+  }
+  .upload-btn:hover{background:var(--ember);}
+  .remove-btn{font-size:0.74rem; color:var(--cream-dim); cursor:pointer; background:none; border:none; text-decoration:underline;}
+  .hero-thumb-row{display:flex; gap:10px; flex-wrap:wrap; margin-bottom:12px;}
+  input[type=file]{display:none;}
+  .owner-badge{
+    display:inline-flex; align-items:center; gap:8px; font-family:'JetBrains Mono',monospace;
+    font-size:0.76rem; color:#7fd0a0; margin-bottom:20px;
+  }
+  .owner-badge::before{content:""; width:7px;height:7px;border-radius:50%; background:#7fd0a0;}
+  .logout-btn{margin-left:auto; font-size:0.76px; color:var(--cream-dim); text-decoration:underline; cursor:pointer; background:none; border:none; font-family:'JetBrains Mono',monospace;}
+  .save-status{font-size:0.8rem; color:var(--maize); margin-top:6px; min-height:16px;}
+
+  .toast{
+    position:fixed; bottom:26px; left:50%; transform:translateX(-50%) translateY(20px);
+    background:var(--cream); color:var(--charcoal); padding:14px 22px; border-radius:12px;
+    font-family:'JetBrains Mono',monospace; font-size:0.82rem; box-shadow:var(--shadow);
+    opacity:0; pointer-events:none; transition:all .3s ease; z-index:2000;
+  }
+  .toast.show{opacity:1; transform:translateX(-50%) translateY(0);}
+
+  @media(max-width:860px){
+    .navlinks{display:none;}
+    .nav-cta{display:none;}
+    .burger{display:flex;}
+  }
+</style>
+</head>
+<body>
+
+<div class="ember-field" id="emberField"></div>
+
+<header id="siteHeader">
+  <nav class="wrap">
+    <div class="brand"><span class="dot"></span> Mama's Kitchen <span style="color:var(--cream-dim); font-weight:400;">Nakuru</span></div>
+    <div class="navlinks">
+      <a href="#about">About</a>
+      <a href="#dishes">What to Try</a>
+      <a href="#offers">Offers</a>
+      <a href="#menu">Menu</a>
+      <a href="#visit">Find Us</a>
+    </div>
+    <a href="#menu" class="nav-cta">See Full Menu →</a>
+    <button class="burger" id="burgerBtn" aria-label="Menu"><span></span><span></span><span></span></button>
+  </nav>
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="#about">About</a>
+    <a href="#dishes">What to Try</a>
+    <a href="#offers">Offers</a>
+    <a href="#menu">Menu</a>
+    <a href="#visit">Find Us</a>
+  </div>
+</header>
+
+<section class="hero grid-texture">
+  <div class="wrap hero-inner">
+    <div class="eyebrow">Nakuru's Hidden Gem</div>
+    <h1>Karibu Nakuru,<br>karibu <em>familia.</em></h1>
+    <p class="lede">A small family-owned kitchen serving authentic Kenyan plates — nyama choma fresh off the charcoal, ugali made soft, and a welcome that feels like home.</p>
+    <div class="actions">
+      <a href="https://wa.me/254115531131" target="_blank" class="btn btn-primary">Book on WhatsApp →</a>
+      <a href="#menu" class="btn btn-ghost">See Our Menu</a>
+    </div>
+    <div class="hero-tag"><span class="line"></span> "Pole pole, lakini chakula in moto moto." — fresh, fiery, full of love.</div>
+  </div>
+  <div class="hero-gallery" id="heroGallery"></div>
+</section>
+
+<section id="about" class="grid-texture">
+  <div class="wrap">
+    <div class="about-grid">
+      <div class="reveal">
+        <div class="eyebrow">About Us</div>
+        <h2 style="font-size:clamp(2rem,3.6vw,2.6rem); margin-bottom:24px;">No fancy stuff. Just honest, delicious food.</h2>
+        <div class="about-text">
+          <p>We're a small family-owned restaurant right in the heart of Nakuru, grown from a humble kitchen into a place where locals and visitors come together to enjoy authentic Kenyan meals made with love and fresh ingredients from our own backyard and local farmers.</p>
+          <p>We cook slow so you can enjoy — eat up and leave with a full belly and a happy heart. That's why Kenyan cuisine, done right, holds its own anywhere in the world.</p>
+        </div>
+        <div class="about-note">"Hakuna matata" when the food is this good.</div>
+      </div>
+      <div class="about-photo reveal" id="aboutPhotoWrap">
+        <div class="ph-empty" id="aboutPhotoEmpty">
+          <svg width="46" height="46" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M3 7a2 2 0 0 1 2-2h2l1.5-2h7L17 5h2a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7z"/><circle cx="12" cy="13" r="4"/></svg>
+          <span style="font-family:'JetBrains Mono',monospace; font-size:0.74rem;">Photo coming soon</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="dishes">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <h2>What to try first</h2>
+      <p>Don't know where to start? Here's what our regulars keep coming back for.</p>
+    </div>
+    <div class="dish-grid" id="dishGrid"></div>
+  </div>
+</section>
+
+<section id="love" class="grid-texture">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <h2>Why people love us</h2>
+      <p>We let the regulars do the talking.</p>
+    </div>
+    <div class="quote-row">
+      <div class="quote reveal"><span class="mark">"</span><p>The best nyama choma in Nakuru, hands down. The meat is always soft and the mchele is perfect.</p><div class="who">— A Wednesday regular</div></div>
+      <div class="quote reveal"><span class="mark">"</span><p>Felt like I was eating at my grandmother's house. Portion sizes are generous and the service is warm.</p><div class="who">— Weekend visitor</div></div>
+      <div class="quote reveal"><span class="mark">"</span><p>Affordable, tasty and fast. My new lunch spot every Friday.</p><div class="who">— A Friday lunch crowd</div></div>
+    </div>
+  </div>
+</section>
+
+<section id="offers">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <h2>Special offers &amp; events</h2>
+      <p>A few reasons to plan your next visit around.</p>
+    </div>
+    <div class="offer-row">
+      <div class="offer-card reveal"><h3>Wednesday Nyama Night</h3><p>Buy 1kg of nyama choma, get extra kachumbari free.</p></div>
+      <div class="offer-card reveal"><h3>Family Meal Deal</h3><p>Feed 4 people for the price of 3 — every weekend.</p></div>
+      <div class="offer-card reveal"><h3>Takeaway &amp; Delivery</h3><p>Can't make it in? We bring the heat to your door.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="menu" class="grid-texture">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <h2>The full menu</h2>
+      <p>Everything from Asubuhi chai to the last coal of nyama choma.</p>
+    </div>
+    <div class="menu-tabs" id="menuTabs"></div>
+    <div id="menuPanels"></div>
+  </div>
+</section>
+
+<footer id="visit">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div class="footer-cta reveal">
+        <div class="eyebrow">Tuko Tayari Kukupokea</div>
+        <h2>We are ready to welcome you.</h2>
+        <p>"Usikose" — don't miss out on the best food in town. Come once, you'll come again. Karibu tena!</p>
+        <a href="https://wa.me/254115531131" target="_blank" class="btn btn-primary">Call / WhatsApp 0115 531131 →</a>
+      </div>
+      <div class="footer-col">
+        <h5>Visit</h5>
+        <p>Nakuru, Kenya</p>
+        <p>Open daily, 7AM – 10PM</p>
+        <a href="https://www.google.com/maps/search/?api=1&query=Nakuru+Kenya" target="_blank">Get directions →</a>
+      </div>
+      <div class="footer-col">
+        <h5>Menu</h5>
+        <a href="#dishes">Signature dishes</a>
+        <a href="#menu">Full price list</a>
+        <a href="#offers">This week's offers</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Mama's Kitchen Nakuru. Made with love &amp; charcoal smoke.</span>
+      <button class="owner-link" id="ownerLinkBtn">Owner login</button>
+    </div>
+  </div>
+</footer>
+
+<!-- OWNER MODAL -->
+<div class="modal-overlay" id="ownerModal">
+  <div class="modal">
+    <button class="modal-close" id="closeOwnerModal">&times;</button>
+
+    <div id="loginView">
+      <h3>Owner login</h3>
+      <p class="sub">Log in to upload photos. Anything you publish here goes live on the site for every visitor.</p>
+      <div class="field">
+        <label for="ownerPassword">Password</label>
+        <input type="password" id="ownerPassword" placeholder="••••••••">
+      </div>
+      <button class="btn btn-primary" id="loginBtn" style="width:100%; justify-content:center;">Log in</button>
+      <div class="modal-msg" id="loginMsg"></div>
+    </div>
+
+    <div id="managerView" style="display:none;">
+      <div style="display:flex; align-items:center; margin-bottom:6px;">
+        <span class="owner-badge">Logged in as owner</span>
+        <button class="logout-btn" id="logoutBtn">Log out</button>
+      </div>
+      <h3>Manage photos</h3>
+      <p class="sub">Photos you upload here are visible to everyone who visits the site — there's no preview step, it publishes right away.</p>
+
+      <div class="owner-section">
+        <h4>Hero gallery</h4>
+        <p class="hint">Up to 3 photos shown at the top of the homepage.</p>
+        <div class="hero-thumb-row" id="heroThumbRow"></div>
+        <label class="upload-btn">Upload photo<input type="file" accept="image/*" id="heroUploadInput"></label>
+        <div class="save-status" id="heroSaveStatus"></div>
+      </div>
+
+      <div class="owner-section">
+        <h4>About us photo</h4>
+        <p class="hint">Shown beside the About Us story.</p>
+        <div class="upload-row">
+          <img class="thumb" id="aboutThumb" style="display:none;">
+          <label class="upload-btn">Upload photo<input type="file" accept="image/*" id="aboutUploadInput"></label>
+          <button class="remove-btn" id="aboutRemoveBtn" style="display:none;">Remove</button>
+        </div>
+        <div class="save-status" id="aboutSaveStatus"></div>
+      </div>
+
+      <div class="owner-section" id="dishUploadSection">
+        <h4>Signature dish photos</h4>
+        <p class="hint">Add a photo for each dish in "What to Try."</p>
+        <div id="dishUploadList" style="display:flex; flex-direction:column; gap:16px;"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<!--
+  ============================================================================
+  PHOTO STORAGE — Firebase Firestore (free tier)
+  ============================================================================
+  This site is static (GitHub Pages / Netlify / Vercel), so it has no server
+  of its own. To make owner-uploaded photos visible to every visitor, photos
+  are saved to a small free Firebase Firestore database instead of browser
+  storage. Browser storage (localStorage) or the old window.storage API only
+  ever lives on ONE visitor's device/session — it can never be "live for
+  everyone," which is why uploads weren't appearing for other visitors.
+
+  SETUP (one-time, ~5 minutes):
+  1. Go to https://console.firebase.google.com and create a free project.
+  2. In the project, click "Build > Firestore Database" > Create database
+     > Start in "production mode" (we set rules below) > choose a region.
+  3. Go to Project settings (gear icon) > General > scroll to "Your apps" >
+     click the Web icon (</>) > register the app (no hosting needed) >
+     copy the firebaseConfig object it gives you.
+  4. Paste those values into the FIREBASE_CONFIG object just below.
+  5. In Firestore > Rules, paste this (lets anyone read, but only the site's
+     own logic gates writes behind the owner password — Firestore rules
+     can't check a password, so we keep writes open at the database level
+     and rely on the in-app login. This matches the simple needs of this
+     site; do not store anything truly sensitive in this database):
+
+     rules_version = '2';
+     service cloud.firestore {
+       match /databases/{database}/documents {
+         match /site/{document=**} {
+           allow read: if true;
+           allow write: if true;
+         }
+       }
+     }
+
+  6. Save, then publish your site. Done — uploads will now be visible to
+     everyone who visits.
+-->
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import {
+  getFirestore, doc, getDoc, setDoc
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+// ---------------------------------------------------------------
+// >>> PASTE YOUR FIREBASE CONFIG HERE <<<
+// ---------------------------------------------------------------
+const FIREBASE_CONFIG = {
+  apiKey: "YOUR_API_KEY",
+  authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
+  projectId: "YOUR_PROJECT_ID",
+  storageBucket: "YOUR_PROJECT_ID.appspot.com",
+  messagingSenderId: "YOUR_SENDER_ID",
+  appId: "YOUR_APP_ID"
+};
+
+const firebaseApp = initializeApp(FIREBASE_CONFIG);
+const db = getFirestore(firebaseApp);
+const PHOTOS_DOC = doc(db, "site", "photos");
+
+// Expose a storage-like interface so the rest of the page's logic
+// stays exactly the same shape as before.
+window.cloudPhotos = {
+  async load(){
+    const snap = await getDoc(PHOTOS_DOC);
+    return snap.exists() ? snap.data() : null;
+  },
+  async save(photosObj){
+    await setDoc(PHOTOS_DOC, photosObj);
+    return true;
+  }
+};
+window.cloudPhotosReady = true;
+window.dispatchEvent(new Event('cloud-photos-ready'));
+</script>
+
+<script>
+// ---------------------------------------------------------------
+// DATA
+// ---------------------------------------------------------------
+const DISHES = [
+  {id:'nyama-choma-special', name:'Nyama Choma Special', desc:'Tender goat or beef grilled over charcoal the real Kenyan way. Served with kachumbari that bites back.'},
+  {id:'mamas-ugali-greens', name:"Mama's Ugali & Greens", desc:'Soft ugali with buttery sukuma wiki or mrenda. Simple, comforting, addictive.'},
+  {id:'githeri-power-bowl', name:'Githeri Power Bowl', desc:'Beans & maize cooked to perfection with coconut milk and spices. The ultimate Kenyan comfort food.'},
+  {id:'fish-fry', name:'Fish Fry (Tilapia or Mudfish)', desc:'Crispy outside, juicy inside — straight from the lake.'},
+  {id:'kienyeji-chicken-stew', name:'Kienyeji Chicken Stew', desc:'Slow-cooked free-range chicken, rich tomato gravy.'},
+  {id:'chai-mandazi-combo', name:'Chai & Mandazi Combo', desc:'For that perfect mid-afternoon or breakfast vibe.'},
+];
+
+const MENU = [
+  { id:'breakfast', label:'Breakfast', sub:'Asubuhi · 7AM–11AM', items:[
+    {name:'Chai & Mandazi', price:150},
+    {name:'Mayai Mbili na Chapati', price:250, note:'Two eggs with chapati'},
+    {name:'Mbaazi ya Nazi', price:280},
+    {name:'Oatmeal or Ugali Special', price:200},
+  ]},
+  { id:'starters', label:'Starters', sub:'Vibaridi', items:[
+    {name:'Kachumbari Fresh', price:120},
+    {name:'Mshikaki', price:250, note:'Beef or goat skewers'},
+    {name:'Samosa', price:200, note:'Beef or veg'},
+    {name:'Mutura', price:300},
+    {name:'Viazi Karai', price:180},
+  ]},
+  { id:'grills', label:'Grills', sub:'Nyama Choma', items:[
+    {name:'Nyama Choma (Beef)', price:'650 / 1,200', note:'½kg / 1kg'},
+    {name:'Mbuzi Choma (Goat)', price:'750 / 1,400', note:'½kg / 1kg'},
+    {name:'Kuku Choma (Chicken)', price:'650 / 1,200', note:'½ / 1'},
+    {name:'Mixed Grill Platter', price:1800},
+    {name:'Fish Choma', price:650},
+  ]},
+  { id:'stews', label:'Stews', sub:'Wetfry / Mchuzi', items:[
+    {name:'Kuku Wet Fry', price:550},
+    {name:'Beef Wet Fry', price:450},
+    {name:'Mbuzi Fry', price:550, note:'Goat'},
+    {name:'Tilapia Wet Fry', price:500},
+    {name:'Matumbo', price:400},
+  ]},
+  { id:'sides', label:'Sides', sub:'Accompaniments', items:[
+    {name:'Ugali (large)', price:100},
+    {name:'Chapati', price:100, note:'2 pieces'},
+    {name:'Rice', price:150},
+    {name:'Chips', price:150},
+    {name:'Kachumbari', price:80},
+  ]},
+  { id:'drinks', label:'Drinks', sub:'Vinywaji', items:[
+    {name:'Fresh Chai', price:50},
+    {name:'Fresh Juice', price:150},
+    {name:'Maziwa', price:100, note:'Milk'},
+    {name:'Soda', price:50},
+    {name:'Water', price:50},
+    {name:'Kenyan Coffee', price:120},
+  ]},
+];
+
+const OWNER_PASSWORD = 'manu@640';
+let photos = { hero: [], about: null, dishes: {} };
+let isOwner = false;
+
+// ---------------------------------------------------------------
+// RENDER: dishes, menu
+// ---------------------------------------------------------------
+function dishCardHTML(d, idx){
+  const img = photos.dishes[d.id];
+  return `<div class="dish-card reveal show">
+    <div class="dish-photo" id="dishphoto-${d.id}">
+      <span class="dish-num">0${idx+1}</span>
+      ${img ? `<img src="${img}" alt="${d.name}">` : dishIconSVG()}
+    </div>
+    <div class="dish-body"><h3>${d.name}</h3><p>${d.desc}</p></div>
+  </div>`;
+}
+function dishIconSVG(){
+  return `<svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="rgba(251,243,230,0.3)" stroke-width="1.3" style="position:relative;z-index:1;"><path d="M4 11h16M4 11a2 2 0 0 0-2 2v1h20v-1a2 2 0 0 0-2-2M4 11V9a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v2M8 7V5M12 7V5M16 7V5"/></svg>`;
+}
+function renderDishes(){
+  document.getElementById('dishGrid').innerHTML = DISHES.map(dishCardHTML).join('');
+}
+
+function renderMenuTabs(){
+  const tabs = document.getElementById('menuTabs');
+  tabs.innerHTML = MENU.map((c,i)=>`<button class="menu-tab ${i===0?'active':''}" data-cat="${c.id}">${c.label}</button>`).join('');
+  tabs.querySelectorAll('.menu-tab').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      tabs.querySelectorAll('.menu-tab').forEach(b=>b.classList.remove('active'));
+      btn.classList.add('active');
+      document.querySelectorAll('.menu-panel').forEach(p=>p.classList.remove('active'));
+      document.getElementById('panel-'+btn.dataset.cat).classList.add('active');
+    });
+  });
+}
+function renderMenuPanels(){
+  const panels = document.getElementById('menuPanels');
+  panels.innerHTML = MENU.map((c,i)=>`
+    <div class="menu-panel ${i===0?'active':''}" id="panel-${c.id}">
+      <div class="menu-cat">
+        <h4>${c.label} — ${c.sub}</h4>
+        ${c.items.map(it=>`
+          <div class="menu-item">
+            <span class="name">${it.name}${it.note?`<span class="note">${it.note}</span>`:''}</span>
+            <span class="price"><span class="arrow">→</span>Ksh ${it.price}</span>
+          </div>
+        `).join('')}
+      </div>
+    </div>
+  `).join('');
+}
+
+// ---------------------------------------------------------------
+// RENDER: photo-driven areas (hero gallery, about photo)
+// ---------------------------------------------------------------
+function heroPlaceholderSVG(){
+  return `<svg class="placeholder-icon" viewBox="0 0 24 24" fill="none" stroke="rgba(251,243,230,0.35)" stroke-width="1.2"><path d="M4 11h16M4 11a2 2 0 0 0-2 2v1h20v-1a2 2 0 0 0-2-2M4 11V9a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v2M8 7V5M12 7V5M16 7V5"/></svg>`;
+}
+function renderHeroGallery(){
+  const wrap = document.getElementById('heroGallery');
+  const slots = 3;
+  let html = '';
+  for(let i=0;i<slots;i++){
+    const img = photos.hero[i];
+    html += `<div class="ph">${img ? `<img src="${img}">` : heroPlaceholderSVG()}</div>`;
+  }
+  wrap.innerHTML = html;
+}
+function renderAboutPhoto(){
+  const wrap = document.getElementById('aboutPhotoWrap');
+  if(photos.about){
+    wrap.innerHTML = `<img src="${photos.about}" alt="Mama's Kitchen Nakuru">`;
+  } else {
+    wrap.innerHTML = `<div class="ph-empty">
+      <svg width="46" height="46" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M3 7a2 2 0 0 1 2-2h2l1.5-2h7L17 5h2a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7z"/><circle cx="12" cy="13" r="4"/></svg>
+      <span style="font-family:'JetBrains Mono',monospace; font-size:0.74rem;">Photo coming soon</span>
+    </div>`;
+  }
+}
+function renderAll(){
+  renderHeroGallery();
+  renderAboutPhoto();
+  renderDishes();
+}
+
+// ---------------------------------------------------------------
+// STORAGE (Firebase-backed — see module script above for window.cloudPhotos)
+// ---------------------------------------------------------------
+function waitForCloud(){
+  return new Promise((resolve)=>{
+    if(window.cloudPhotosReady) return resolve();
+    window.addEventListener('cloud-photos-ready', ()=>resolve(), {once:true});
+    // safety timeout in case the module script fails to load (e.g. ad blocker)
+    setTimeout(resolve, 4000);
+  });
+}
+
+async function loadPhotos(){
+  await waitForCloud();
+  try{
+    if(window.cloudPhotos){
+      const data = await window.cloudPhotos.load();
+      if(data){
+        photos = Object.assign({hero:[], about:null, dishes:{}}, data);
+      }
+    }
+  }catch(e){
+    console.error('Could not load photos from the database:', e);
+  }
+  renderAll();
+}
+async function savePhotos(){
+  try{
+    if(!window.cloudPhotos) throw new Error('Cloud storage not ready');
+    await window.cloudPhotos.save(photos);
+    return true;
+  }catch(e){
+    console.error('Storage error:', e);
+    return false;
+  }
+}
+
+// ---------------------------------------------------------------
+// IMAGE RESIZE (keeps each Firestore document small & fast — 1MB limit)
+// ---------------------------------------------------------------
+function resizeImageFile(file, maxDim=1000, quality=0.72){
+  return new Promise((resolve, reject)=>{
+    const reader = new FileReader();
+    reader.onload = (e)=>{
+      const img = new Image();
+      img.onload = ()=>{
+        let {width, height} = img;
+        if(width > height && width > maxDim){
+          height = Math.round(height * (maxDim/width)); width = maxDim;
+        } else if(height >= width && height > maxDim){
+          width = Math.round(width * (maxDim/height)); height = maxDim;
+        }
+        const canvas = document.createElement('canvas');
+        canvas.width = width; canvas.height = height;
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(img, 0, 0, width, height);
+        resolve(canvas.toDataURL('image/jpeg', quality));
+      };
+      img.onerror = reject;
+      img.src = e.target.result;
+    };
+    reader.onerror = reject;
+    reader.readAsDataURL(file);
+  });
+}
+
+function showToast(msg){
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'), 2600);
+}
+
+// ---------------------------------------------------------------
+// OWNER MODAL LOGIC
+// ---------------------------------------------------------------
+const ownerModal = document.getElementById('ownerModal');
+document.getElementById('ownerLinkBtn').addEventListener('click', ()=>{
+  ownerModal.classList.add('open');
+  document.getElementById(isOwner ? 'managerView':'loginView').style.display='block';
+});
+document.getElementById('closeOwnerModal').addEventListener('click', ()=> ownerModal.classList.remove('open'));
+ownerModal.addEventListener('click', (e)=>{ if(e.target===ownerModal) ownerModal.classList.remove('open'); });
+
+document.getElementById('loginBtn').addEventListener('click', attemptLogin);
+document.getElementById('ownerPassword').addEventListener('keydown', (e)=>{ if(e.key==='Enter') attemptLogin(); });
+
+function attemptLogin(){
+  const val = document.getElementById('ownerPassword').value;
+  const msg = document.getElementById('loginMsg');
+  if(val === OWNER_PASSWORD){
+    isOwner = true;
+    msg.textContent = '';
+    document.getElementById('loginView').style.display='none';
+    document.getElementById('managerView').style.display='block';
+    document.getElementById('ownerPassword').value='';
+    renderManagerView();
+  } else {
+    msg.textContent = "That password doesn't match. Try again.";
+    msg.className = 'modal-msg err';
+  }
+}
+document.getElementById('logoutBtn').addEventListener('click', ()=>{
+  isOwner = false;
+  document.getElementById('managerView').style.display='none';
+  document.getElementById('loginView').style.display='block';
+});
+
+function renderManagerView(){
+  // hero thumbs
+  const row = document.getElementById('heroThumbRow');
+  row.innerHTML = photos.hero.map((src,i)=>`
+    <div style="position:relative;">
+      <img class="thumb" src="${src}">
+      <button class="remove-btn" data-idx="${i}" style="position:absolute; bottom:-20px; left:0;">remove</button>
+    </div>
+  `).join('');
+  row.querySelectorAll('.remove-btn').forEach(b=>{
+    b.addEventListener('click', async ()=>{
+      photos.hero.splice(Number(b.dataset.idx),1);
+      await savePhotos(); renderAll(); renderManagerView();
+      showToast('Hero photo removed.');
+    });
+  });
+
+  // about thumb
+  const aThumb = document.getElementById('aboutThumb');
+  const aRemove = document.getElementById('aboutRemoveBtn');
+  if(photos.about){ aThumb.src = photos.about; aThumb.style.display='block'; aRemove.style.display='inline'; }
+  else { aThumb.style.display='none'; aRemove.style.display='none'; }
+
+  // dish uploads
+  const list = document.getElementById('dishUploadList');
+  list.innerHTML = DISHES.map(d=>`
+    <div class="upload-row" data-dish="${d.id}">
+      <img class="thumb" style="${photos.dishes[d.id]?'':'display:none;'}" src="${photos.dishes[d.id]||''}">
+      <span style="font-size:0.86rem; flex:1; min-width:120px;">${d.name}</span>
+      <label class="upload-btn">Upload<input type="file" accept="image/*" class="dish-file-input" data-dish="${d.id}"></label>
+      <button class="remove-btn dish-remove-btn" data-dish="${d.id}" style="${photos.dishes[d.id]?'':'display:none;'}">Remove</button>
+    </div>
+  `).join('');
+
+  list.querySelectorAll('.dish-file-input').forEach(inp=>{
+    inp.addEventListener('change', async (e)=>{
+      const file = e.target.files[0]; if(!file) return;
+      try{
+        const dataUrl = await resizeImageFile(file);
+        photos.dishes[inp.dataset.dish] = dataUrl;
+        const ok = await savePhotos();
+        renderAll(); renderManagerView();
+        showToast(ok ? 'Dish photo published.' : 'Could not save — try again.');
+      }catch(err){ showToast('Something went wrong reading that image.'); }
+    });
+  });
+  list.querySelectorAll('.dish-remove-btn').forEach(b=>{
+    b.addEventListener('click', async ()=>{
+      delete photos.dishes[b.dataset.dish];
+      await savePhotos(); renderAll(); renderManagerView();
+      showToast('Dish photo removed.');
+    });
+  });
+}
+
+document.getElementById('heroUploadInput').addEventListener('change', async (e)=>{
+  const file = e.target.files[0]; if(!file) return;
+  if(photos.hero.length >= 3){ showToast('Hero gallery is full — remove one first.'); e.target.value=''; return; }
+  const status = document.getElementById('heroSaveStatus');
+  status.textContent = 'Uploading…';
+  try{
+    const dataUrl = await resizeImageFile(file);
+    photos.hero.push(dataUrl);
+    const ok = await savePhotos();
+    status.textContent = ok ? 'Published.' : 'Could not save — try again.';
+    renderAll(); renderManagerView();
+    if(ok) showToast('Hero photo is now live.');
+  }catch(err){ status.textContent='Could not read that image.'; }
+  e.target.value='';
+});
+
+document.getElementById('aboutUploadInput').addEventListener('change', async (e)=>{
+  const file = e.target.files[0]; if(!file) return;
+  const status = document.getElementById('aboutSaveStatus');
+  status.textContent = 'Uploading…';
+  try{
+    const dataUrl = await resizeImageFile(file);
+    photos.about = dataUrl;
+    const ok = await savePhotos();
+    status.textContent = ok ? 'Published.' : 'Could not save — try again.';
+    renderAll(); renderManagerView();
+    if(ok) showToast('About photo is now live.');
+  }catch(err){ status.textContent='Could not read that image.'; }
+  e.target.value='';
+});
+document.getElementById('aboutRemoveBtn').addEventListener('click', async ()=>{
+  photos.about = null;
+  await savePhotos(); renderAll(); renderManagerView();
+  showToast('About photo removed.');
+});
+
+// ---------------------------------------------------------------
+// NAV / SCROLL EFFECTS
+// ---------------------------------------------------------------
+const header = document.getElementById('siteHeader');
+window.addEventListener('scroll', ()=>{
+  header.classList.toggle('scrolled', window.scrollY > 40);
+});
+document.getElementById('burgerBtn').addEventListener('click', ()=>{
+  document.getElementById('mobileMenu').classList.toggle('open');
+});
+document.querySelectorAll('.mobile-menu a').forEach(a=>{
+  a.addEventListener('click', ()=> document.getElementById('mobileMenu').classList.remove('open'));
+});
+
+const revealEls = ()=> document.querySelectorAll('.reveal');
+const io = new IntersectionObserver((entries)=>{
+  entries.forEach(en=>{ if(en.isIntersecting){ en.target.classList.add('show'); io.unobserve(en.target);} });
+},{threshold:0.15});
+function observeReveals(){ revealEls().forEach(el=> io.observe(el)); }
+
+// ember particles
+function spawnEmbers(){
+  const field = document.getElementById('emberField');
+  for(let i=0;i<16;i++){
+    const s = document.createElement('span');
+    s.className = 'ember-spark';
+    const left = Math.random()*100;
+    const duration = 6 + Math.random()*7;
+    const delay = Math.random()*8;
+    const drift = (Math.random()*60-30)+'px';
+    s.style.left = left+'%';
+    s.style.animationDuration = duration+'s';
+    s.style.animationDelay = delay+'s';
+    s.style.setProperty('--drift', drift);
+    field.appendChild(s);
+  }
+}
+
+// ---------------------------------------------------------------
+// INIT
+// ---------------------------------------------------------------
+renderMenuTabs();
+renderMenuPanels();
+spawnEmbers();
+loadPhotos().then(()=>{ observeReveals(); });
+observeReveals();
+</script>
+</body>
+</html>
